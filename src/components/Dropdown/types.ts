@@ -13,20 +13,20 @@ export interface StateOption extends Option {
 }
 
 export interface DropdownProps {
-    options: Option[];
-    onChange: Handler;
-    clearable?: boolean;
-    default?: Option | Option[];
-    disabled?: boolean;
-    id?: string;
-    label?: string;
-    multiple?: boolean;
-    open?: boolean;
-    placeholder?: string;
+  options: Option[];
+  onChange: Handler;
+  clearable?: boolean;
+  default?: Option | Option[];
+  disabled?: boolean;
+  id?: string;
+  label?: string;
+  multiple?: boolean;
+  open?: boolean;
+  placeholder?: string;
 }
 
 export interface DropdownOptionProps {
-  value:  string | number;
+  value: string | number;
   key: string;
   className?: string;
 }

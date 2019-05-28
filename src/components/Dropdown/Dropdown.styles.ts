@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { DropdownOptionProps, DropdownWrapperProps, IconProps, DropdownHeaderProps } from './types';
+import { DropdownHeaderProps, DropdownOptionProps, DropdownWrapperProps, IconProps } from './types';
 
 const DropdownLabel = styled('label')`
   display: block;
-  color: hsl(210,10%,43%);
+  color: hsl(210, 10%, 43%);
   line-height: 11px;
   font-size: 11px;
   margin: 0px 0px 4px;
@@ -22,7 +22,7 @@ const DropdownWrapper = styled('div')<DropdownWrapperProps>`
 `;
 
 const DropdownHeader = styled('div')<DropdownHeaderProps>`
-  padding: ${props => props.multiple && props.optionSelected ? `.5em` : `1em`};
+  padding: ${props => (props.multiple && props.optionSelected ? `.5em` : `1em`)};
   line-height: 1em;
   min-height: 1em;
 `;
@@ -34,7 +34,7 @@ const DropdownMenu = styled('div')`
   top: 100%;
   background: #fff;
   font-size: 1em;
-  box-shadow: 0 2px 3px 0 rgba(34,36,38,0.15);
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
   border: 1px solid rgba(34, 36, 38, 0.15);
   border-top: 0px;
   z-index: 999;
@@ -64,7 +64,7 @@ const DropdownMultiOption = styled('div')<DropdownOptionProps>`
   border-radius: 0.28571429rem;
   display: inline-block;
   font-size: 1em;
-  padding: .5em;
+  padding: 0.5em;
   margin-right: 0.5em;
 
   &:hover {
@@ -72,7 +72,6 @@ const DropdownMultiOption = styled('div')<DropdownOptionProps>`
     border-color: #e0e0e0;
   }
 `;
-
 
 const DropdownIcon = styled(FontAwesomeIcon)<IconProps>`
   position: absolute;
