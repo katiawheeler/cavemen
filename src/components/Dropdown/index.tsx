@@ -74,6 +74,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   };
 
   const handleOptionClick = (option: StateOption, event: MouseEvent<HTMLElement>) => {
+    if(currentlySelected && currentlySelected.includes(option)) { return; }
     // find original, unmodified option that was selected
     const originalOption = props.options.find(opt => opt.key === option.key);
     if(!originalOption) { return; }
