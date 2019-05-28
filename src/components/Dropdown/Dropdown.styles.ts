@@ -24,7 +24,7 @@ const DropdownWrapper = styled('div')<DropdownWrapperProps>`
 const DropdownHeader = styled('div')<DropdownHeaderProps>`
   padding: ${props => (props.multiple && props.optionSelected ? `.5em` : `1em`)};
   line-height: 1em;
-  min-height: 1em;
+  min-height: 40px;
 `;
 
 const DropdownMenu = styled('div')`
