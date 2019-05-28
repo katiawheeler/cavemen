@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "isolatedModules": false,
+    "outDir": "dist",
+    "noImplicitAny": true,
+    "allowJs": false,
+    "esModuleInterop": false,
+    "resolveJsonModule": false,
+    "noEmit": false,
+    "strict": false,
+    "jsx": "react"
+  }
+}

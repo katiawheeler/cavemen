@@ -1,0 +1,22 @@
+# directories
+.vscode
+__mocks__
+coverage
+src
+public
+.storybook
+
+# files
+babel.config.js
+.gitattributes
+.gitignore
+.npmrc
+.prettierignore
+.prettierrc.json
+tsconfig.json
+tsconfig.prod.json
+tslint.json
+yarn-error.log
+.travis.yml
+rollup.config.js
+yarn.lock
