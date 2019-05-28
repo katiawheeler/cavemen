@@ -40,6 +40,10 @@ export interface DropdownHeaderProps {
   optionSelected?: boolean;
 }
 
+export interface DropdownMenuProps {
+  open?: boolean;
+}
+
 export interface DropdownWrapperProps {
   disabled?: boolean;
 }

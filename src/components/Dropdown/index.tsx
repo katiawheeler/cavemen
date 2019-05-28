@@ -181,8 +181,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
             onClick={() => setOpen(!open)}
           />
         </DropdownHeader>
-        {open && (
-          <DropdownMenu data-testid="dropdown-menu">
+          <DropdownMenu data-testid="dropdown-menu" open={open}>
             {options.map(
               option =>
                 option.visible && (
@@ -198,7 +197,6 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
                 )
             )}
           </DropdownMenu>
-        )}
       </DropdownWrapper>
     </>
   );
