@@ -1,9 +1,9 @@
 import React, { MouseEvent } from 'react';
+import { fireEvent, render, waitForElement } from 'react-testing-library';
 import Dropdown from '.';
-import { render, fireEvent, waitForElement } from 'react-testing-library';
 import { Option } from './types';
 
-const options: Array<Option> = [
+const options: Option[] = [
   {
     name: 'hi',
     key: 'hi',
@@ -29,6 +29,7 @@ const defaultOption: Option = {
 
 let event: MouseEvent<HTMLElement> | null = null;
 
+// tslint:disable-next-line
 const onChangeSpy = jest.fn((options, _event) => {
   event = _event;
 });

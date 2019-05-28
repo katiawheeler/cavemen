@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { DropdownOptionProps, IconProps, DropdownWrapperProps } from './types';
+import { DropdownOptionProps, DropdownWrapperProps, IconProps } from './types';
 
 const DropdownMultiOption = styled('div')<DropdownOptionProps>`
   z-index: 999;

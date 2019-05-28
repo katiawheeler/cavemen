@@ -1,21 +1,21 @@
-import React, { FunctionComponent, useState, useEffect, MouseEvent, useRef } from 'react';
 import { faAngleDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import intersection from 'lodash.intersection';
 import unionBy from 'lodash.unionby';
+import React, { FunctionComponent, MouseEvent, useEffect, useRef, useState } from 'react';
 
 import {
   ClearIcon,
-  DropdownWrapper,
-  DropdownOption,
-  DropdownMenu,
+  DeleteIcon,
   DropdownHeader,
-  DropdownLabel,
   DropdownIcon,
+  DropdownLabel,
+  DropdownMenu,
   DropdownMultiOption,
-  DeleteIcon
+  DropdownOption,
+  DropdownWrapper
 } from './Dropdown.styles';
-import { Option, DropdownProps, StateOption } from './types';
-import { setupOptions, convertToOption } from './utils';
+import { DropdownProps, Option, StateOption } from './types';
+import { convertToOption, setupOptions } from './utils';
 
 const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   const [currentlySelected, setCurrentlySelected] = useState<StateOption[] | null>(null);
@@ -43,14 +43,14 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     const foundOption = formattedOptions.find(option => option.name === defaultOption.name);
 
     // set as selected if found
-    if (foundOption) setCurrentlySelected([foundOption]);
+    if (foundOption) { setCurrentlySelected([foundOption]); }
   }
  
   useEffect(() => {
     // event listener for click outside
     document.addEventListener('mousedown', handleOutsideClick);
     
-    if (props.open) setOpen(props.open);
+    if (props.open) { setOpen(props.open); }
     
     if (props.default) {
       props.multiple ? handleDefaultOptionsForMultipleDropdown(props.default as Option[]) : handleDefaultOptionForSingleDropdown(props.default as Option);
@@ -76,7 +76,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   const handleOptionClick = (option: StateOption, event: MouseEvent<HTMLElement>) => {
     // find original, unmodified option that was selected
     const originalOption = props.options.find(opt => opt.key === option.key);
-    if(!originalOption) return;
+    if(!originalOption) { return; }
 
     if (props.multiple) {
       const newSelected = currentlySelected ? [...currentlySelected, option] : [option];
@@ -85,28 +85,28 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
       props.onChange(convertToOption(newSelected), event)
     } else {
       setCurrentlySelected([option]);
-      if(!clearable) setClearable(true);
+      if(!clearable) { setClearable(true); }
       props.onChange(originalOption, event);
     }
 
-    if (!props.multiple) setOpen(!open);
-    if (props.multiple) modifyDropdown(option, false);
+    if (!props.multiple) { setOpen(!open); }
+    if (props.multiple) { modifyDropdown(option, false); }
   };
 
   const modifyDropdown = (option: StateOption, visible: boolean) => {
-    if(!options) return;
+    if(!options) { return; }
     const stateOptions = [...options];
     const index = stateOptions.findIndex(stateOption => option.key === stateOption.key);
-    if (index === -1) return;
+    if (index === -1) { return; }
     stateOptions[index].visible = visible;
     setOptions(stateOptions);
   };
 
   const removeFromSelected = (option: StateOption, event: MouseEvent<HTMLElement>) => {
-    if (!currentlySelected) return;
+    if (!currentlySelected) { return; }
     const stateSelectedOptions = [...currentlySelected];
     const index = stateSelectedOptions.findIndex(stateSelected => option.key === stateSelected.key);
-    if (index === -1) return;
+    if (index === -1) { return; }
     stateSelectedOptions.splice(index, 1);
 
     // remove from selected
@@ -145,18 +145,18 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   };
 
   const determineClassName = (option: StateOption) => {
-    if (!currentlySelected) return '';
-    if (currentlySelected.find(opt => opt.key === option.key)) return 'selected';
+    if (!currentlySelected) { return ''; }
+    if (currentlySelected.find(opt => opt.key === option.key)) { return 'selected'; }
     return '';
   };
 
   const determineDropdownHeader = () => {
-    if(!currentlySelected && props.placeholder) return props.placeholder;
-    if (!currentlySelected) return '';
+    if(!currentlySelected && props.placeholder) { return props.placeholder; }
+    if (!currentlySelected) { return ''; }
 
-    if(props.multiple) return renderMultipleOptions()
+    if(props.multiple) { return renderMultipleOptions() }
 
-    if(currentlySelected) return currentlySelected[0].name;
+    if(currentlySelected) { return currentlySelected[0].name; }
 
     return '';
   }

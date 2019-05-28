@@ -1,4 +1,4 @@
-import { SyntheticEvent, MouseEvent } from 'react';
+import { MouseEvent, SyntheticEvent } from 'react';
 
 export type Handler = (option: Option | Option[] | null, event: SyntheticEvent) => void;
 
@@ -12,7 +12,7 @@ export interface StateOption extends Option {
   visible: boolean;
 }
 
-export type DropdownProps = {
+export interface DropdownProps {
     options: Option[];
     onChange: Handler;
     default?: Option | Option[];
@@ -24,23 +24,23 @@ export type DropdownProps = {
     placeholder?: string;
 }
 
-export type DropdownOptionProps = {
+export interface DropdownOptionProps {
   value:  string | number;
   key: string;
   className?: string;
 }
 
-export type IconProps = {
+export interface IconProps {
   onClick: (event: MouseEvent<HTMLElement>) => void;
 }
 
-export type DropdownHeaderProps = {
+export interface DropdownHeaderProps {
   selected: StateOption[] | null;
   multiple?: boolean;
   handleRemoveFromSelected: (option: StateOption) => void;
   handleHeaderClick: () => void;
 }
 
-export type DropdownWrapperProps = {
+export interface DropdownWrapperProps {
   disabled?: boolean;
 }
