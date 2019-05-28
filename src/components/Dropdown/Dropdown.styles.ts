@@ -2,7 +2,13 @@ import styled from '@emotion/styled';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { DropdownHeaderProps, DropdownMenuProps, DropdownOptionProps, DropdownWrapperProps, IconProps } from './types';
+import {
+  DropdownHeaderProps,
+  DropdownMenuProps,
+  DropdownOptionProps,
+  DropdownWrapperProps,
+  IconProps,
+} from './types';
 
 const DropdownLabel = styled('label')`
   display: block;
@@ -28,7 +34,7 @@ const DropdownHeader = styled('div')<DropdownHeaderProps>`
 `;
 
 const DropdownMenu = styled('div')<DropdownMenuProps>`
-  ${props => props.open ? `opacity: 1` : `opacity: 0`};
+  ${props => (props.open ? `opacity: 1` : `opacity: 0`)};
 
   margin: 0 -1px;
   width: 100%;
