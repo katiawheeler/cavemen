@@ -4,6 +4,7 @@
 |--------------------|----------------------------------------------------------|--------------------------------|:------------------------------:|:-------------:|
 | **options**        | An array of `Option` type to display                     | `Option[]`                     | *                              |       -       |
 | **onChange**       | An event handler for when an `Option` is selected.       | `Handler`                      | *                              |       -       |
+| **clearable**      | Whether or not the Dropdown Option can be cleared        | `Boolean`                      |                                |    `false`    |
 | **default**        | A default `Option` to be selected                        | `Option`                       |                                |       -       |
 | **disabled**       | Whether or not the Dropdown is disabled                  | `Boolean`                      |                                |    `false`    |
 | **id**             | An ID to append to the Dropdown wrapper                  | `String`                       |                                |       -       |

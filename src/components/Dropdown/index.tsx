@@ -169,10 +169,12 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
       <DropdownWrapper data-testid="dropdown-wrapper" ref={wrapperRef} role="listbox" id={props.id} disabled={props.disabled} >
         <DropdownHeader
           data-testid="dropdown-header"
+          multiple={props.multiple}
+          optionSelected={options.length > 0}
           onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)}
         >
           {determineDropdownHeader()}
-          {clearable && <ClearIcon icon={faTimes} data-testid="clear-icon" onClick={clearSelection} />}
+          {clearable && props.clearable && <ClearIcon icon={faTimes} data-testid="clear-icon" onClick={clearSelection} />}
           <DropdownIcon
             icon={faAngleDown}
             data-testid="dropdown-icon"

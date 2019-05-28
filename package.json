@@ -32,7 +32,7 @@
     "react-dom": "^16.8.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "start-storybook -p 9009",
     "check-types": "tsc",
     "build": "rimraf ./dist && yarn build:commonjs",
     "build:commonjs": "tsc -p tsconfig.prod.json",
@@ -46,7 +46,6 @@
     "preversion": "yarn lint",
     "version": "yarn format && git add -A src",
     "postversion": "git push && git push --tags",
-    "storybook": "start-storybook -p 9009",
     "build-storybook": "build-storybook -c .storybook -o .out"
   },
   "eslintConfig": {

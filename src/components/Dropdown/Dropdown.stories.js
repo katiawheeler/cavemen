@@ -45,6 +45,9 @@ storiesOf('Components|Dropdown', module)
   .add('disabled', () => <Dropdown options={dropdownOptions} onChange={(option) => console.log(option)} disabled />, {
     notes: dropdownMD,
   })
+  .add('clearable', () => <Dropdown options={dropdownOptions} clearable onChange={(option) => console.log(option)} />, {
+    notes: dropdownMD,
+  })
   .add('open by default', () => <Dropdown options={dropdownOptions} onChange={(option) => console.log(option)} open />, {
     notes: dropdownMD,
   })

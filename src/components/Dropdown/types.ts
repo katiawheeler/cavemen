@@ -15,6 +15,7 @@ export interface StateOption extends Option {
 export interface DropdownProps {
     options: Option[];
     onChange: Handler;
+    clearable?: boolean;
     default?: Option | Option[];
     disabled?: boolean;
     id?: string;
@@ -35,10 +36,8 @@ export interface IconProps {
 }
 
 export interface DropdownHeaderProps {
-  selected: StateOption[] | null;
   multiple?: boolean;
-  handleRemoveFromSelected: (option: StateOption) => void;
-  handleHeaderClick: () => void;
+  optionSelected?: boolean;
 }
 
 export interface DropdownWrapperProps {

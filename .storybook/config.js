@@ -1,18 +1,12 @@
-import { configure } from '@storybook/react';
-import { themes } from '@storybook/theming';
-import { addParameters } from '@storybook/react';
+import { configure, addDecorator } from '@storybook/react';
+import { globalSetup } from './decorators';
 
 const req = require.context('../src/components', true, /\.stories\.js$/);
+
+addDecorator(globalSetup);
 
 function loadStories() {
   req.keys().forEach(filename => req(filename));
 }
-
-// Option defaults.
-addParameters({
-  options: {
-    theme: themes.light,
-  },
-});
 
 configure(loadStories, module);
