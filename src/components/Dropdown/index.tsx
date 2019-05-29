@@ -15,7 +15,7 @@ import {
   DropdownWrapper
 } from './Dropdown.styles';
 import { DropdownProps, Option, StateOption } from './types';
-import { convertToOption, setupOptions } from './utils';
+import { convertToPropsOption, convertOptionsToStateOptions } from './utils';
 
 const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   const [currentlySelected, setCurrentlySelected] = useState<StateOption[] | null>(null);
@@ -24,28 +24,9 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   const [clearable, setClearable] = useState<boolean>(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const handleDefaultOptionsForMultipleDropdown = (defaultOptions: Option[]) => {
-    // setup selected options and set visibility to false on the already selected options
-    const selectedOptions = setupOptions(intersection(defaultOptions, props.options), false);
-    setCurrentlySelected(selectedOptions);
-
-    // format and merge options and the selected so that those items don't appear in the dropdown
-    const formattedOptions = setupOptions(props.options)
-    setOptions(unionBy(selectedOptions, formattedOptions, 'key'));
-  }
-
-  const handleDefaultOptionForSingleDropdown = (defaultOption: Option) => {
-    // format options from props
-    const formattedOptions = setupOptions(props.options);
-    setOptions(formattedOptions);
-
-    // find "default" option
-    const foundOption = formattedOptions.find(option => option.name === defaultOption.name);
-
-    // set as selected if found
-    if (foundOption) { setCurrentlySelected([foundOption]); }
-  }
- 
+  /**
+   * Setup
+   */
   useEffect(() => {
     // event listener for click outside
     document.addEventListener('mousedown', handleOutsideClick);
@@ -55,7 +36,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     if (props.default) {
       props.multiple ? handleDefaultOptionsForMultipleDropdown(props.default as Option[]) : handleDefaultOptionForSingleDropdown(props.default as Option);
     } else {
-      setOptions(setupOptions(props.options));
+      setOptions(convertOptionsToStateOptions(props.options));
     }
 
     // removal of event listener on unmount
@@ -64,26 +45,81 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     };
   }, []);
 
+  /**
+   * Handle Default Options for Multiple Dropdown
+   * 
+   * Sets up the options passed in that should be selected by default.
+   * Removes those options from the dropdown list.
+   * 
+   * @param defaultOptions: Option[] - Multiple default options passed in through props
+   */
+  const handleDefaultOptionsForMultipleDropdown = (defaultOptions: Option[]) => {
+    // setup selected options and set visibility to false on the already selected options
+    const selectedOptions = convertOptionsToStateOptions(intersection(defaultOptions, props.options), false);
+    setCurrentlySelected(selectedOptions);
+
+    // format and merge options and the selected so that those items don't appear in the dropdown
+    setOptions(unionBy(selectedOptions, convertOptionsToStateOptions(props.options), 'key'));
+  }
+
+  /**
+   * Handle Default Option For Single Dropdown
+   * 
+   * Modifies the passed in option to be in the shape that we want
+   * Adds it to the currently selected
+   * 
+   * @param defaultOption: Option - Singular default option passed in through props
+   */
+  const handleDefaultOptionForSingleDropdown = (defaultOption: Option) => {
+    const formattedOptions = convertOptionsToStateOptions(props.options);
+    setOptions(formattedOptions);
+
+    // find "default" option
+    const foundOption = formattedOptions.find(option => option.name === defaultOption.name);
+
+    if (foundOption) { setCurrentlySelected([foundOption]); }
+  }
+ 
+  /**
+   * Handle Outside Click
+   * 
+   * Checks if the click occurred within the current wrapper.
+   * If the click happened outside of the wrapper, the dropdown will close.
+   * 
+   * @param event: Event - the event that triggered this function
+   */
   const handleOutsideClick = (event: Event) => {
     if (wrapperRef.current && event.target) {
-      // if the event target doesn't exist in the wrapper of the dropdown, close it
       if (!wrapperRef.current.contains(event.target as Node)) {
         setOpen(false);
       }
     }
   };
 
+  /**
+   * Handle Option Click
+   * 
+   * Handler for when the user clicks on an option from the dropdown
+   * 
+   * @param option: StateOption - the option that was clicked on
+   * @param event: MouseEvent<HTMLElement> - the event that triggered the function
+   */
   const handleOptionClick = (option: StateOption, event: MouseEvent<HTMLElement>) => {
+    // if it's already selected, do nothing
     if(currentlySelected && currentlySelected.includes(option)) { return; }
+
     // find original, unmodified option that was selected
     const originalOption = props.options.find(opt => opt.key === option.key);
+
+    // if we can't find the original option to pass back, do nothing
     if(!originalOption) { return; }
 
     if (props.multiple) {
+      // if there is something already selected, append it
       const newSelected = currentlySelected ? [...currentlySelected, option] : [option];
       setCurrentlySelected(newSelected);
 
-      props.onChange(convertToOption(newSelected), event)
+      props.onChange(convertToPropsOption(newSelected), event)
     } else {
       setCurrentlySelected([option]);
       if(!clearable) { setClearable(true); }
@@ -91,35 +127,109 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     }
 
     if (!props.multiple) { setOpen(!open); }
-    if (props.multiple) { modifyDropdown(option, false); }
+    if (props.multiple) { modifyOptionVisibility(option, false); }
   };
 
-  const modifyDropdown = (option: StateOption, visible: boolean) => {
+  /**
+   * Modify Option Visibility
+   * 
+   * Modifies the visibility of an option within the dropdown list
+   * 
+   * @param option: StateOption - the option to modify the visibility of
+   * @param visible: boolean - whether or not the option should be visible
+   */
+  const modifyOptionVisibility = (option: StateOption, visible: boolean) => {
+    // if there are no options set in state, do nothing
     if(!options) { return; }
+
+    // make copy of state
     const stateOptions = [...options];
+    
     const index = stateOptions.findIndex(stateOption => option.key === stateOption.key);
+
+    // if it doesn't exist in state, do nothing
     if (index === -1) { return; }
+
     stateOptions[index].visible = visible;
+
     setOptions(stateOptions);
   };
 
-  const removeFromSelected = (option: StateOption, event: MouseEvent<HTMLElement>) => {
+  /**
+   * Remove From Currently Selected
+   * 
+   * Removes the item from the currently selected items
+   * 
+   * @param option: StateOption - the option to remove
+   * @param event: MouseEvent<HTMLElement> - the event that triggered the function 
+   */
+  const removeFromCurrentlySelected = (option: StateOption, event: MouseEvent<HTMLElement>) => {
+    // if there's not something currently selected, do nothing
     if (!currentlySelected) { return; }
+
+    // make copy of state
     const stateSelectedOptions = [...currentlySelected];
+
     const index = stateSelectedOptions.findIndex(stateSelected => option.key === stateSelected.key);
+
+    // if it doesn't exist in state, do nothing
     if (index === -1) { return; }
+
+    // remove the item from state
     stateSelectedOptions.splice(index, 1);
 
-    // remove from selected
     setCurrentlySelected(stateSelectedOptions);
 
-    // add to dropdown
-    modifyDropdown(option, true);
+    // add the removed item back into the dropdown list
+    modifyOptionVisibility(option, true);
 
-    // call onChange with new selected options
-    props.onChange(convertToOption(stateSelectedOptions), event);
+    props.onChange(stateSelectedOptions.length ? convertToPropsOption(stateSelectedOptions) : null, event);
   };
 
+  /**
+   * Handle Header Click
+   * 
+   * Handler for when the user clicks on the header of the dropdown
+   * 
+   * @param event: MouseEvent<HTMLElement> - the event that triggered the function
+   */
+  const handleHeaderClick = (event: MouseEvent<HTMLElement>) => {
+    const nodeEvent = event.target as Node;
+    if (nodeEvent.parentElement === wrapperRef.current) {
+      setOpen(!open);
+    }
+  };
+  
+  /**
+   * Clear Selected
+   * 
+   * Clears the selected option
+   * 
+   * @param event: MouseEvent<HTMLElement> - the event that triggered the function 
+   */
+  const clearSelected = (event: MouseEvent<HTMLElement>) => { 
+    setClearable(false); 
+    setCurrentlySelected(null); 
+    props.onChange(null, event);
+  }
+
+  /**
+   * Determine Dropdown Header Content
+   * 
+   * Determines what the dropdown header will display
+   */
+  const determineDropdownHeaderContent = () => {
+    if(!currentlySelected && props.placeholder) { return props.placeholder; }
+    if (!currentlySelected) { return ''; }
+    
+    if(props.multiple) { return renderMultipleOptions() }
+    
+    if(currentlySelected) { return currentlySelected[0].name; }
+    
+    return '';
+  }
+  
+  
   const renderMultipleOptions = () =>
     currentlySelected!.map((option: StateOption) => (
       <DropdownMultiOption
@@ -132,38 +242,11 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
         data-testid={`dropdown-selected-multi-${option.key}-delete`}
           icon={faTimes}
           onClick={(e: MouseEvent<HTMLElement>) => {
-            removeFromSelected(option, e);
+            removeFromCurrentlySelected(option, e);
           }}
         />
       </DropdownMultiOption>
     ));
-
-  const handleHeaderClick = (event: MouseEvent<HTMLElement>) => {
-    const nodeEvent = event.target as Node;
-    if (nodeEvent.parentElement === wrapperRef.current) {
-      setOpen(!open);
-    }
-  };
-
-  const determineClassName = (option: StateOption) => {
-    if (!currentlySelected) { return ''; }
-    if (currentlySelected.find(opt => opt.key === option.key)) { return 'selected'; }
-    return '';
-  };
-
-  const determineDropdownHeader = () => {
-    if(!currentlySelected && props.placeholder) { return props.placeholder; }
-    if (!currentlySelected) { return ''; }
-
-    if(props.multiple) { return renderMultipleOptions() }
-
-    if(currentlySelected) { return currentlySelected[0].name; }
-
-    return '';
-  }
-
-  const clearSelection = (event: MouseEvent<HTMLElement>) => { setClearable(false); setCurrentlySelected(null); props.onChange(null, event)}
-
   return (
     <>
       {props.label && <DropdownLabel data-testid="dropdown-label">{props.label}</DropdownLabel>}
@@ -174,8 +257,8 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
           optionSelected={options.length > 0}
           onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)}
         >
-          {determineDropdownHeader()}
-          {clearable && props.clearable && <ClearIcon icon={faTimes} data-testid="clear-icon" onClick={clearSelection} />}
+          {determineDropdownHeaderContent()}
+          {clearable && props.clearable && <ClearIcon icon={faTimes} data-testid="clear-icon" onClick={clearSelected} />}
           <DropdownIcon
             icon={faAngleDown}
             data-testid="dropdown-icon"
@@ -191,7 +274,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
                     key={option.key}
                     data-testid={`dropdown-option-${option.key}`}
                     onClick={(event: MouseEvent<HTMLElement>) => handleOptionClick(option, event)}
-                    className={determineClassName(option)}
+                    className={currentlySelected && currentlySelected.includes(option) ? 'selected' : ''}
                   >
                     {option.name}
                   </DropdownOption>
