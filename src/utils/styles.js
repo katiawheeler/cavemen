@@ -6,12 +6,13 @@
  * @param  {...any} styles - Style object or theme function for @emotion/core.
  * @returns {object} The composed style object.
  */
-export const csx = (...styles) => theme => styles.reduce((a, style) => {
+export const csx = (...styles) => theme =>
+  styles.reduce((a, style) => {
     if (typeof style === 'object') {
-        return { ...a, ...style };
+      return { ...a, ...style };
     }
     if (typeof style === 'function') {
-        return { ...a, ...style(theme) };
+      return { ...a, ...style(theme) };
     }
     return a;
-}, {});
+  }, {});
