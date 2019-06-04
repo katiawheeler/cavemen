@@ -22,7 +22,6 @@ const DropdownWrapper = styled('div')<DropdownWrapperProps>`
   ${props => props.disabled && `opacity: 0.5; pointer-events: none;`}
   cursor: pointer;
   background: #fff;
-  border: 1px solid rgba(34, 36, 38, 0.15);
   position: relative;
   width: 100%;
   min-width: 200px;
@@ -32,6 +31,7 @@ const DropdownHeader = styled('div')<DropdownHeaderProps>`
   padding: ${props => (props.multiple && props.optionSelected ? `.5em` : `1em`)};
   line-height: 1em;
   min-height: 40px;
+  border: 1px solid rgba(34, 36, 38, 0.15);
 `;
 
 const DropdownMenu = styled('div')<DropdownMenuProps>`

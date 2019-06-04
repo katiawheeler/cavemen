@@ -116,4 +116,17 @@ storiesOf('Components|Dropdown', module)
     {
       notes: dropdownMD,
     }
+  )
+  .add(
+    'with trigger',
+    () => (
+      <Dropdown
+        options={dropdownOptions}
+        onChange={option => console.log(option)}
+        trigger={<div>I'm a trigger - I can be any React component</div>}
+      />
+    ),
+    {
+      notes: dropdownMD,
+    }
   );

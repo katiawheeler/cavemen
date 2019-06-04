@@ -23,6 +23,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const [clearable, setClearable] = useState<boolean>(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
 
   /**
    * Setup
@@ -30,6 +31,9 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   useEffect(() => {
     // event listener for click outside
     document.addEventListener('mousedown', handleOutsideClick);
+
+    // throw error if multiple and trigger are set
+    if(props.trigger && props.multiple) { throw new Error("A trigger cannot be used with a multi-select dropdown")}
     
     if (props.open) { setOpen(props.open); }
     
@@ -195,10 +199,11 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
    */
   const handleHeaderClick = (event: MouseEvent<HTMLElement>) => {
     const nodeEvent = event.target as Node;
-    if (nodeEvent.parentElement === wrapperRef.current) {
+    if (nodeEvent === headerRef.current || nodeEvent.parentElement === headerRef.current) {
       setOpen(!open);
     }
   };
+
   
   /**
    * Clear Selected
@@ -251,20 +256,28 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     <>
       {props.label && <DropdownLabel data-testid="dropdown-label">{props.label}</DropdownLabel>}
       <DropdownWrapper data-testid="dropdown-wrapper" ref={wrapperRef} role="listbox" id={props.id} disabled={props.disabled}>
-        <DropdownHeader
-          data-testid="dropdown-header"
-          multiple={props.multiple}
-          optionSelected={options.length > 0}
-          onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)}
-        >
-          {determineDropdownHeaderContent()}
-          {clearable && props.clearable && <ClearIcon icon={faTimes} data-testid="clear-icon" onClick={clearSelected} />}
-          <DropdownIcon
-            icon={faAngleDown}
-            data-testid="dropdown-icon"
-            onClick={() => setOpen(!open)}
-          />
+        {props.trigger && 
+          <div onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)} ref={headerRef}>
+            {props.trigger}
+          </div>
+        }
+        {!props.trigger && 
+          <DropdownHeader
+            data-testid="dropdown-header"
+            multiple={props.multiple}
+            optionSelected={options.length > 0}
+            onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)}
+            ref={headerRef}
+          >
+            {determineDropdownHeaderContent()}
+            {clearable && props.clearable && <ClearIcon icon={faTimes} data-testid="clear-icon" onClick={clearSelected} />}
+            <DropdownIcon
+              icon={faAngleDown}
+              data-testid="dropdown-icon"
+              onClick={() => setOpen(!open)}
+            />
         </DropdownHeader>
+        }
           <DropdownMenu data-testid="dropdown-menu" open={open}>
             {options.map(
               option =>
