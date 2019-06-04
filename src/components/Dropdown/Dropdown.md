@@ -12,6 +12,7 @@
 | **multiple**       | Whether or not the Dropdown should be a mult-select      | `Boolean`                      |                                |    `false`    |
 | **open**           | Whether or not the Dropdown is open on render            | `Boolean`                      |                                |    `false`    |
 | **placeholder**    | Placeholder text before a user selects an option         | `String`                       |                                |       -       |
+| **trigger**        | A component passed down as a trigger - for example, if you want an icon to have dropdown functionality         | `ReactNode`                       |                                |       -       |
 
 ***
 

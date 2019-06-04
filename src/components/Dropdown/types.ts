@@ -1,4 +1,4 @@
-import { MouseEvent, SyntheticEvent } from 'react';
+import { MouseEvent, ReactNode, SyntheticEvent } from 'react';
 
 export type Handler = (option: Option | Option[] | null, event: SyntheticEvent) => void;
 
@@ -23,7 +23,7 @@ export interface DropdownProps {
   multiple?: boolean;
   open?: boolean;
   placeholder?: string;
-  css?: object;
+  trigger?: ReactNode;
 }
 
 export interface DropdownOptionProps {
@@ -47,5 +47,4 @@ export interface DropdownMenuProps {
 
 export interface DropdownWrapperProps {
   disabled?: boolean;
-  css?: object;
 }
