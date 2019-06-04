@@ -15,7 +15,7 @@ import {
   DropdownWrapper
 } from './Dropdown.styles';
 import { DropdownProps, Option, StateOption } from './types';
-import { convertToPropsOption, convertOptionsToStateOptions } from './utils';
+import { convertOptionsToStateOptions, convertToPropsOption } from './utils';
 
 const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   const [currentlySelected, setCurrentlySelected] = useState<StateOption[] | null>(null);
@@ -250,7 +250,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   return (
     <>
       {props.label && <DropdownLabel data-testid="dropdown-label">{props.label}</DropdownLabel>}
-      <DropdownWrapper data-testid="dropdown-wrapper" ref={wrapperRef} role="listbox" id={props.id} disabled={props.disabled} >
+      <DropdownWrapper data-testid="dropdown-wrapper" ref={wrapperRef} role="listbox" id={props.id} disabled={props.disabled}>
         <DropdownHeader
           data-testid="dropdown-header"
           multiple={props.multiple}

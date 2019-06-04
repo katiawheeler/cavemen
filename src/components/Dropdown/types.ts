@@ -23,6 +23,7 @@ export interface DropdownProps {
   multiple?: boolean;
   open?: boolean;
   placeholder?: string;
+  css?: object;
 }
 
 export interface DropdownOptionProps {
@@ -46,4 +47,5 @@ export interface DropdownMenuProps {
 
 export interface DropdownWrapperProps {
   disabled?: boolean;
+  css?: object;
 }
