@@ -24,6 +24,7 @@ export interface DropdownProps {
   open?: boolean;
   placeholder?: string;
   trigger?: ReactNode;
+  css?: any;
 }
 
 export interface DropdownOptionProps {

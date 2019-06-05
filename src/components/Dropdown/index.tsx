@@ -1,7 +1,9 @@
+/** @jsx jsx */
 import { faAngleDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import intersection from 'lodash.intersection';
 import unionBy from 'lodash.unionby';
 import React, { FunctionComponent, MouseEvent, useEffect, useRef, useState } from 'react';
+import { jsx } from '@emotion/core';
 
 import {
   ClearIcon,
@@ -253,7 +255,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
       </DropdownMultiOption>
     ));
   return (
-    <>
+    <div css={props.css || {}}>
       {props.label && <DropdownLabel data-testid="dropdown-label">{props.label}</DropdownLabel>}
       <DropdownWrapper data-testid="dropdown-wrapper" ref={wrapperRef} role="listbox" id={props.id} disabled={props.disabled} trigger={props.trigger}>
         {props.trigger && 
@@ -295,7 +297,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
             )}
           </DropdownMenu>
       </DropdownWrapper>
-    </>
+    </div>
   );
 };
 

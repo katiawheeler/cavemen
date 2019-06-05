@@ -129,4 +129,17 @@ storiesOf('Components|Dropdown', module)
     {
       notes: dropdownMD,
     }
+  )
+  .add(
+    'with custom css',
+    () => (
+      <Dropdown
+        options={dropdownOptions}
+        onChange={option => console.log(option)}
+        css={{color: 'green'}}
+      />
+    ),
+    {
+      notes: dropdownMD,
+    }
   );
