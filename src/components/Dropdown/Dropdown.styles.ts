@@ -23,8 +23,8 @@ const DropdownWrapper = styled('div')<DropdownWrapperProps>`
   cursor: pointer;
   background: #fff;
   position: relative;
-  width: 100%;
-  min-width: 200px;
+  width: auto;
+  display: inline-block;
 `;
 
 const DropdownHeader = styled('div')<DropdownHeaderProps>`
@@ -39,6 +39,7 @@ const DropdownMenu = styled('div')<DropdownMenuProps>`
 
   margin: 0 -1px;
   width: 100%;
+  min-width: 200px;
   position: absolute;
   top: 100%;
   background: #fff;
@@ -53,6 +54,7 @@ const DropdownMenu = styled('div')<DropdownMenuProps>`
 const DropdownOption = styled('div')<DropdownOptionProps>`
   line-height: 1em;
   padding: 1em;
+  text-align: left;
   font-size: 1rem;
 
   &.selected {
