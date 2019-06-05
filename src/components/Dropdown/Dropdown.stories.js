@@ -136,7 +136,7 @@ storiesOf('Components|Dropdown', module)
       <Dropdown
         options={dropdownOptions}
         onChange={option => console.log(option)}
-        css={{color: 'green'}}
+        css={{ color: 'green' }}
       />
     ),
     {
