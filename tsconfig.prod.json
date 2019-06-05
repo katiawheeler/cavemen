@@ -10,6 +10,6 @@
     "resolveJsonModule": false,
     "noEmit": false,
     "strict": false,
-    "jsx": "react"
+    "jsx": "react",
   }
 }

@@ -1,9 +1,10 @@
 /** @jsx jsx */
+import { jsx } from '@emotion/core';
 import { faAngleDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import intersection from 'lodash.intersection';
 import unionBy from 'lodash.unionby';
 import React, { FunctionComponent, MouseEvent, useEffect, useRef, useState } from 'react';
-import { jsx } from '@emotion/core';
+import { csx } from '../../utils/styles';
 
 import {
   ClearIcon,
@@ -255,7 +256,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
       </DropdownMultiOption>
     ));
   return (
-    <div css={props.css || {}}>
+    <div css={csx(props.css, { display: 'inline-block'})}>
       {props.label && <DropdownLabel data-testid="dropdown-label">{props.label}</DropdownLabel>}
       <DropdownWrapper data-testid="dropdown-wrapper" ref={wrapperRef} role="listbox" id={props.id} disabled={props.disabled} trigger={props.trigger}>
         {props.trigger && 
