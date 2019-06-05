@@ -13,7 +13,7 @@ export default {
 
   // Specify here external modules which you don't want to include in your bundle (for instance: 'lodash', 'moment' etc.)
   // https://rollupjs.org/guide/en#external-e-external
-  external: [ 
+  external: [
     ...Object.keys(pkg.dependencies || {}),
     ...Object.keys(pkg.devDependencies || {}),
   ],
@@ -38,6 +38,7 @@ export default {
     commonjs(),
 
     // Compile TypeScript/JavaScript files
-    babel({ extensions, include: ['src/**/*']}),
+    babel({ extensions, include: ['src/**/*'], plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-class-properties', '@babel/plugin-transform-typescript'], presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript', 'minify'] }),
+
   ],
 };
