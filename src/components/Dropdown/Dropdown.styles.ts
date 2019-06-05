@@ -24,7 +24,7 @@ const DropdownWrapper = styled('div')<DropdownWrapperProps>`
   background: #fff;
   position: relative;
   width: auto;
-  min-width: ${props => props.trigger ? 'auto' : '200px'};
+  min-width: ${props => (props.trigger ? 'auto' : '200px')};
   display: inline-block;
 `;
 
