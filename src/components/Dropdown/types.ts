@@ -47,4 +47,5 @@ export interface DropdownMenuProps {
 
 export interface DropdownWrapperProps {
   disabled?: boolean;
+  trigger?: ReactNode;
 }

@@ -255,7 +255,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   return (
     <>
       {props.label && <DropdownLabel data-testid="dropdown-label">{props.label}</DropdownLabel>}
-      <DropdownWrapper data-testid="dropdown-wrapper" ref={wrapperRef} role="listbox" id={props.id} disabled={props.disabled}>
+      <DropdownWrapper data-testid="dropdown-wrapper" ref={wrapperRef} role="listbox" id={props.id} disabled={props.disabled} trigger={props.trigger}>
         {props.trigger && 
           <div onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)} ref={headerRef}>
             {props.trigger}
