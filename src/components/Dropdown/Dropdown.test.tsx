@@ -6,7 +6,6 @@ import { Option } from './types';
 const options: Option[] = [
   {
     name: 'hi',
-    key: 'hi',
     value: 'hello',
   },
   {
@@ -132,6 +131,7 @@ describe('Dropdown', () => {
       });
     });
   });
+
 
   describe('multi-select dropdown', () => {
     describe('when the multiple prop is passed', () => {
