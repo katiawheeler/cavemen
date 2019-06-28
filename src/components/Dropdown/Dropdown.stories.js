@@ -7,12 +7,10 @@ import dropdownMD from './Dropdown.md';
 
 const dropdownOptions = [
   {
-    key: '1',
     value: 1,
     name: 'Thing 1',
   },
   {
-    key: '2',
     value: 2,
     name: 'Thing 2',
   },

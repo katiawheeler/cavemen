@@ -1,9 +1,9 @@
 /** @jsx jsx */
+import React, { FunctionComponent, MouseEvent, useEffect, useRef, useState } from 'react';
 import { jsx } from '@emotion/core';
 import { faAngleDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import intersection from 'lodash.intersection';
 import unionBy from 'lodash.unionby';
-import React, { FunctionComponent, MouseEvent, useEffect, useRef, useState } from 'react';
 import { csx } from '../../utils/styles';
 
 import {
@@ -287,7 +287,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
                 option.visible && (
                   <DropdownOption
                     value={`${option.value}`}
-                    key={option.key}
+                    key={option.key!}
                     data-testid={`dropdown-option-${option.key}`}
                     onClick={(event: MouseEvent<HTMLElement>) => handleOptionClick(option, event)}
                     className={currentlySelected && currentlySelected.includes(option) ? 'selected' : ''}
