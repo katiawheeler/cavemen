@@ -1,5 +1,5 @@
-import { Option, StateOption } from './types';
 import uniqueId from 'lodash.uniqueid';
+import { Option, StateOption } from './types';
 
 /**
  * Convert Options to State Options
@@ -13,11 +13,12 @@ import uniqueId from 'lodash.uniqueid';
 export const convertOptionsToStateOptions = (
   options: Option[],
   visible: boolean = true
-): StateOption[] => options.map(option => { 
-  // if no key is passed, assign it one
-  const optionKey = option.key ?  option.key : uniqueId();
-  return { ...option, key: optionKey, visible }
-});
+): StateOption[] =>
+  options.map(option => {
+    // if no key is passed, assign it one
+    const optionKey = option.key ? option.key : uniqueId();
+    return { ...option, key: optionKey, visible };
+  });
 
 /**
  * Convert To Props Option
