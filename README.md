@@ -23,7 +23,6 @@ Primitive React Components
 
 ```ts
 interface Option {
-    key?: string | number,
     value: string | number,
     name: string
 }
