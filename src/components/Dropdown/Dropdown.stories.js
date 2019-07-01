@@ -27,12 +27,16 @@ const dropdownOptions = [
 const Square = styled('div')`
   height: 350px;
   width: 350px;
-`
+`;
 
 storiesOf('Components|Dropdown', module)
   .add(
     'default',
-    () => <Square><Dropdown options={dropdownOptions} onChange={option => console.log(option)} /></Square>,
+    () => (
+      <Square>
+        <Dropdown options={dropdownOptions} onChange={option => console.log(option)} />
+      </Square>
+    ),
     {
       notes: dropdownMD,
     }
@@ -41,11 +45,11 @@ storiesOf('Components|Dropdown', module)
     'with label',
     () => (
       <Square>
-      <Dropdown
-        options={dropdownOptions}
-        onChange={option => console.log(option)}
-        label="Dropdown Label"
-      />
+        <Dropdown
+          options={dropdownOptions}
+          onChange={option => console.log(option)}
+          label="Dropdown Label"
+        />
       </Square>
     ),
     {
@@ -56,11 +60,11 @@ storiesOf('Components|Dropdown', module)
     'with placeholder',
     () => (
       <Square>
-      <Dropdown
-        options={dropdownOptions}
-        onChange={option => console.log(option)}
-        placeholder="Select an option"
-      />
+        <Dropdown
+          options={dropdownOptions}
+          onChange={option => console.log(option)}
+          placeholder="Select an option"
+        />
       </Square>
     ),
     {
@@ -71,11 +75,11 @@ storiesOf('Components|Dropdown', module)
     'with default option',
     () => (
       <Square>
-      <Dropdown
-        options={dropdownOptions}
-        default={dropdownOptions[2]}
-        onChange={option => console.log(option)}
-      />
+        <Dropdown
+          options={dropdownOptions}
+          default={dropdownOptions[2]}
+          onChange={option => console.log(option)}
+        />
       </Square>
     ),
     {
@@ -84,28 +88,44 @@ storiesOf('Components|Dropdown', module)
   )
   .add(
     'disabled',
-    () => <Square><Dropdown options={dropdownOptions} onChange={option => console.log(option)} disabled /></Square>,
+    () => (
+      <Square>
+        <Dropdown options={dropdownOptions} onChange={option => console.log(option)} disabled />
+      </Square>
+    ),
     {
       notes: dropdownMD,
     }
   )
   .add(
     'clearable',
-    () => <Square><Dropdown options={dropdownOptions} clearable onChange={option => console.log(option)} /></Square>,
+    () => (
+      <Square>
+        <Dropdown options={dropdownOptions} clearable onChange={option => console.log(option)} />
+      </Square>
+    ),
     {
       notes: dropdownMD,
     }
   )
   .add(
     'open by default',
-    () => <Square><Dropdown options={dropdownOptions} onChange={option => console.log(option)} open /></Square>,
+    () => (
+      <Square>
+        <Dropdown options={dropdownOptions} onChange={option => console.log(option)} open />
+      </Square>
+    ),
     {
       notes: dropdownMD,
     }
   )
   .add(
     'with multiple',
-    () => <Square><Dropdown options={dropdownOptions} onChange={option => console.log(option)} multiple /></Square>,
+    () => (
+      <Square>
+        <Dropdown options={dropdownOptions} onChange={option => console.log(option)} multiple />
+      </Square>
+    ),
     {
       notes: dropdownMD,
     }
@@ -114,12 +134,12 @@ storiesOf('Components|Dropdown', module)
     'with multiple and default options',
     () => (
       <Square>
-      <Dropdown
-        options={dropdownOptions}
-        default={[dropdownOptions[1], dropdownOptions[2]]}
-        onChange={option => console.log(option)}
-        multiple
-      />
+        <Dropdown
+          options={dropdownOptions}
+          default={[dropdownOptions[1], dropdownOptions[2]]}
+          onChange={option => console.log(option)}
+          multiple
+        />
       </Square>
     ),
     {
@@ -130,11 +150,11 @@ storiesOf('Components|Dropdown', module)
     'with trigger',
     () => (
       <Square>
-      <Dropdown
-        options={dropdownOptions}
-        onChange={option => console.log(option)}
-        trigger={<div>I'm a trigger - I can be any React component</div>}
-      />
+        <Dropdown
+          options={dropdownOptions}
+          onChange={option => console.log(option)}
+          trigger={<div>I'm a trigger - I can be any React component</div>}
+        />
       </Square>
     ),
     {
@@ -145,11 +165,11 @@ storiesOf('Components|Dropdown', module)
     'with custom css',
     () => (
       <Square>
-      <Dropdown
-        options={dropdownOptions}
-        onChange={option => console.log(option)}
-        css={{ color: 'green' }}
-      />
+        <Dropdown
+          options={dropdownOptions}
+          onChange={option => console.log(option)}
+          css={{ color: 'green' }}
+        />
       </Square>
     ),
     {

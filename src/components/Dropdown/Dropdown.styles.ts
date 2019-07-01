@@ -20,7 +20,7 @@ const DropdownLabel = styled('label')`
 
 const DropdownText = styled('span')`
   flex-grow: 2;
-`
+`;
 
 const DropdownWrapper = styled('div')<DropdownWrapperProps>`
   ${props => props.disabled && `opacity: 0.5; pointer-events: none;`}
@@ -104,7 +104,7 @@ const DeleteIcon = styled(FontAwesomeIcon)<IconProps>`
 const ClearIcon = styled(FontAwesomeIcon)<IconProps>`
   color: rgb(165, 173, 182);
   font-size: 1em;
-  margin-right: .5em;
+  margin-right: 0.5em;
 `;
 
 export {

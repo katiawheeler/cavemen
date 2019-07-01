@@ -1,10 +1,10 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import { faAngleDown, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import intersection from 'lodash.intersection';
 import unionBy from 'lodash.unionby';
 import React, { FunctionComponent, MouseEvent, useEffect, useRef, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { csx } from '../../utils/styles';
 
 import {
