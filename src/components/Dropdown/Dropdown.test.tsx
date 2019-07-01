@@ -10,19 +10,16 @@ const options: Option[] = [
   },
   {
     name: 'hello',
-    key: 'hello',
     value: 'hellowwww',
   },
   {
     name: 'asdsa',
-    key: 'asd',
     value: 'ahello',
   },
 ];
 
 const defaultOption: Option = {
   name: 'hi',
-  key: 'hi',
   value: 'hello',
 };
 
@@ -110,13 +107,13 @@ describe('Dropdown', () => {
         header = getByTestId('dropdown-header');
         fireEvent.click(header);
 
-        optionToClick = getByTestId('dropdown-option-asd');
+        optionToClick = getByTestId('dropdown-option-hello');
       });
 
       it('should set the selected option to the clicked option', () => {
         expect(header.textContent).toBe('');
         fireEvent.click(optionToClick);
-        expect(header.textContent).toBe('asdsa');
+        expect(header.textContent).toBe('hi');
       });
 
       it('should call the onChange prop with the option', () => {
@@ -124,9 +121,8 @@ describe('Dropdown', () => {
         fireEvent.click(optionToClick);
 
         expect(onChangeSpy).toHaveBeenCalledWith({
-          name: 'asdsa',
-          key: 'asd',
-          value: 'ahello',
+          name: 'hi',
+          value: 'hello',
         }, event);
       });
     });
@@ -166,12 +162,12 @@ describe('Dropdown', () => {
           fireEvent.click(firstOptionToSelect);
 
           // select the second option
-          secondOptionToSelect = getByTestId('dropdown-option-asd');
+          secondOptionToSelect = getByTestId('dropdown-option-hellowwww');
           fireEvent.click(secondOptionToSelect);
 
           // find the selected options in the header
           firstSelectedOption = getByTestId('dropdown-selected-multi-hello');
-          secondSelectedOption = getByTestId('dropdown-selected-multi-asd');
+          secondSelectedOption = getByTestId('dropdown-selected-multi-hellowwww');
           
           // find the first option's delete icon
           firstSelectedOptionToDelete = getByTestId('dropdown-selected-multi-hello-delete');
@@ -180,9 +176,9 @@ describe('Dropdown', () => {
         describe('when the user clicks multiple values from the dropdown', () => {
           it('should add the option to the selected values', () => {
             expect(firstSelectedOption).toBeInTheDocument();
-            expect(firstSelectedOption.textContent).toBe('hello');
+            expect(firstSelectedOption.textContent).toBe('hi');
             expect(secondSelectedOption).toBeInTheDocument();
-            expect(secondSelectedOption.textContent).toBe('asdsa');
+            expect(secondSelectedOption.textContent).toBe('hello');
           });
 
           it('should remove the options from the dropdown', () => {

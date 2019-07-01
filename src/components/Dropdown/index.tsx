@@ -4,17 +4,18 @@ import { faAngleDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import intersection from 'lodash.intersection';
 import unionBy from 'lodash.unionby';
 import React, { FunctionComponent, MouseEvent, useEffect, useRef, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { csx } from '../../utils/styles';
 
 import {
   ClearIcon,
   DeleteIcon,
   DropdownHeader,
-  DropdownIcon,
   DropdownLabel,
   DropdownMenu,
   DropdownMultiOption,
   DropdownOption,
+  DropdownText,
   DropdownWrapper
 } from './Dropdown.styles';
 import { DropdownProps, Option, StateOption } from './types';
@@ -66,7 +67,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     setCurrentlySelected(selectedOptions);
 
     // format and merge options and the selected so that those items don't appear in the dropdown
-    setOptions(unionBy(selectedOptions, convertOptionsToStateOptions(props.options), 'key'));
+    setOptions(unionBy(selectedOptions, convertOptionsToStateOptions(props.options), 'value'));
   }
 
   /**
@@ -82,7 +83,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     setOptions(formattedOptions);
 
     // find "default" option
-    const foundOption = formattedOptions.find(option => option.name === defaultOption.name);
+    const foundOption = formattedOptions.find(option => option.value === defaultOption.value);
 
     if (foundOption) { setCurrentlySelected([foundOption]); }
   }
@@ -116,7 +117,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     if(currentlySelected && currentlySelected.includes(option)) { return; }
 
     // find original, unmodified option that was selected
-    const originalOption = props.options.find(opt => opt.key === option.key);
+    const originalOption = props.options.find(opt => opt.value === option.value);
 
     // if we can't find the original option to pass back, do nothing
     if(!originalOption) { return; }
@@ -152,7 +153,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     // make copy of state
     const stateOptions = [...options];
     
-    const index = stateOptions.findIndex(stateOption => option.key === stateOption.key);
+    const index = stateOptions.findIndex(stateOption => option.value === stateOption.value);
 
     // if it doesn't exist in state, do nothing
     if (index === -1) { return; }
@@ -177,7 +178,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     // make copy of state
     const stateSelectedOptions = [...currentlySelected];
 
-    const index = stateSelectedOptions.findIndex(stateSelected => option.key === stateSelected.key);
+    const index = stateSelectedOptions.findIndex(stateSelected => option.value === stateSelected.value);
 
     // if it doesn't exist in state, do nothing
     if (index === -1) { return; }
@@ -242,12 +243,12 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     currentlySelected!.map((option: StateOption) => (
       <DropdownMultiOption
         value={option.value}
-        key={`selected-${option.key}`}
-        data-testid={`dropdown-selected-multi-${option.key}`}
+        key={`selected-${option.value}`}
+        data-testid={`dropdown-selected-multi-${option.value}`}
       >
         {option.name}
         <DeleteIcon
-        data-testid={`dropdown-selected-multi-${option.key}-delete`}
+        data-testid={`dropdown-selected-multi-${option.value}-delete`}
           icon={faTimes}
           onClick={(e: MouseEvent<HTMLElement>) => {
             removeFromCurrentlySelected(option, e);
@@ -256,7 +257,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
       </DropdownMultiOption>
     ));
   return (
-    <div css={csx(props.css, { display: 'inline-block'})}>
+    <div css={csx(props.css, { display: 'inline-block', width: '100%'})}>
       {props.label && <DropdownLabel data-testid="dropdown-label">{props.label}</DropdownLabel>}
       <DropdownWrapper data-testid="dropdown-wrapper" ref={wrapperRef} role="listbox" id={props.id} disabled={props.disabled} trigger={props.trigger}>
         {props.trigger && 
@@ -272,9 +273,9 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
             onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)}
             ref={headerRef}
           >
-            {determineDropdownHeaderContent()}
+            <DropdownText>{determineDropdownHeaderContent()}</DropdownText>
             {clearable && props.clearable && <ClearIcon icon={faTimes} data-testid="clear-icon" onClick={clearSelected} />}
-            <DropdownIcon
+            <FontAwesomeIcon
               icon={faAngleDown}
               data-testid="dropdown-icon"
               onClick={() => setOpen(!open)}
@@ -287,8 +288,8 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
                 option.visible && (
                   <DropdownOption
                     value={`${option.value}`}
-                    key={option.key!}
-                    data-testid={`dropdown-option-${option.key}`}
+                    key={option.value}
+                    data-testid={`dropdown-option-${option.value}`}
                     onClick={(event: MouseEvent<HTMLElement>) => handleOptionClick(option, event)}
                     className={currentlySelected && currentlySelected.includes(option) ? 'selected' : ''}
                   >

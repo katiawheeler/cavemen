@@ -3,7 +3,6 @@ import { MouseEvent, ReactNode, SyntheticEvent } from 'react';
 export type Handler = (option: Option | Option[] | null, event: SyntheticEvent) => void;
 
 export interface Option {
-  key?: string | number;
   value: string | number;
   name: string;
 }

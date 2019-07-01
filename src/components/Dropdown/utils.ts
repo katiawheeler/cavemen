@@ -15,9 +15,7 @@ export const convertOptionsToStateOptions = (
   visible: boolean = true
 ): StateOption[] =>
   options.map(option => {
-    // if no key is passed, assign it one
-    const optionKey = option.key ? option.key : uniqueId();
-    return { ...option, key: optionKey, visible };
+    return { ...option, key: uniqueId(), visible };
   });
 
 /**

@@ -18,21 +18,30 @@ const DropdownLabel = styled('label')`
   margin: 0px 0px 4px;
 `;
 
+const DropdownText = styled('span')`
+  flex-grow: 2;
+`
+
 const DropdownWrapper = styled('div')<DropdownWrapperProps>`
   ${props => props.disabled && `opacity: 0.5; pointer-events: none;`}
   cursor: pointer;
   background: #fff;
-  position: relative;
   width: auto;
-  min-width: ${props => (props.trigger ? 'auto' : '200px')};
+  position: relative;
+  min-width: ${props => (props.trigger ? 'auto' : '100%')};
   display: inline-block;
 `;
 
 const DropdownHeader = styled('div')<DropdownHeaderProps>`
   padding: ${props => (props.multiple && props.optionSelected ? `.5em 1.5em .5em .5em` : `1em`)};
   line-height: 1em;
-  min-height: 40px;
   border: 1px solid rgba(34, 36, 38, 0.15);
+  white-space: normal;
+  min-height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 `;
 
 const DropdownMenu = styled('div')<DropdownMenuProps>`
@@ -85,12 +94,6 @@ const DropdownMultiOption = styled('div')<DropdownOptionProps>`
   }
 `;
 
-const DropdownIcon = styled(FontAwesomeIcon)<IconProps>`
-  position: absolute;
-  top: 1em;
-  right: 1em;
-`;
-
 const DeleteIcon = styled(FontAwesomeIcon)<IconProps>`
   cursor: pointer;
   margin-left: 0.5em;
@@ -101,9 +104,7 @@ const DeleteIcon = styled(FontAwesomeIcon)<IconProps>`
 const ClearIcon = styled(FontAwesomeIcon)<IconProps>`
   color: rgb(165, 173, 182);
   font-size: 1em;
-  position: absolute;
-  right: 2.25em;
-  bottom: 1em;
+  margin-right: .5em;
 `;
 
 export {
@@ -113,7 +114,7 @@ export {
   DropdownMenu,
   DropdownHeader,
   DropdownLabel,
-  DropdownIcon,
   DropdownMultiOption,
+  DropdownText,
   DeleteIcon,
 };
