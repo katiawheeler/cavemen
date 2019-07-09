@@ -107,14 +107,30 @@ const ClearIcon = styled(FontAwesomeIcon)<IconProps>`
   margin-right: 0.5em;
 `;
 
+const DropdownIcon = styled(FontAwesomeIcon)<IconProps>``;
+
+const FilterTextInput = styled('input')`
+width: 100%;
+min-height: 40px;
+border: none;
+line-height: 1em;
+  font-size: 1em;
+
+&:focus {
+  outline: none;
+}
+`;
+
 export {
   ClearIcon,
   DropdownWrapper,
   DropdownOption,
   DropdownMenu,
   DropdownHeader,
+  DropdownIcon,
   DropdownLabel,
   DropdownMultiOption,
   DropdownText,
   DeleteIcon,
+  FilterTextInput
 };

@@ -175,4 +175,35 @@ storiesOf('Components|Dropdown', module)
     {
       notes: dropdownMD,
     }
+  )
+  .add(
+    'searchable',
+    () => (
+      <Square>
+        <Dropdown
+          options={dropdownOptions}
+          onChange={option => console.log(option)}
+          searchable
+        />
+      </Square>
+    ),
+    {
+      notes: dropdownMD,
+    }
+  )
+  .add(
+    'searchable and clearable',
+    () => (
+      <Square>
+        <Dropdown
+          options={dropdownOptions}
+          onChange={option => console.log(option)}
+          searchable
+          clearable
+        />
+      </Square>
+    ),
+    {
+      notes: dropdownMD,
+    }
   );
