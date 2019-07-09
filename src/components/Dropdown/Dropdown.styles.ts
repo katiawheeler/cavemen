@@ -111,15 +111,15 @@ const ClearIcon = styled(FontAwesomeIcon)<IconProps>`
 const DropdownIcon = styled(FontAwesomeIcon)<IconProps>``;
 
 const FilterTextInput = styled('input')`
-width: 100%;
-min-height: 40px;
-border: none;
-line-height: 1em;
+  width: 100%;
+  min-height: 40px;
+  border: none;
+  line-height: 1em;
   font-size: 1em;
 
-&:focus {
-  outline: none;
-}
+  &:focus {
+    outline: none;
+  }
 `;
 
 export {
@@ -133,5 +133,5 @@ export {
   DropdownMultiOption,
   DropdownText,
   DeleteIcon,
-  FilterTextInput
+  FilterTextInput,
 };

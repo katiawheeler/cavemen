@@ -180,11 +180,7 @@ storiesOf('Components|Dropdown', module)
     'searchable',
     () => (
       <Square>
-        <Dropdown
-          options={dropdownOptions}
-          onChange={option => console.log(option)}
-          searchable
-        />
+        <Dropdown options={dropdownOptions} onChange={option => console.log(option)} searchable />
       </Square>
     ),
     {
