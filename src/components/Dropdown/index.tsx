@@ -330,7 +330,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
         {props.trigger && renderTrigger()}
         {!props.trigger && !props.searchable && renderStandardDropdownHeader()}
         {!props.trigger && props.searchable && renderSearchableDropdownHeader()}
-          <DropdownMenu data-testid="dropdown-menu" open={open}>
+          {open && <DropdownMenu data-testid="dropdown-menu" open={open}>
             {options.map(
               option =>
                 option.visible && (
@@ -346,6 +346,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
                 )
             )}
           </DropdownMenu>
+          }
       </DropdownWrapper>
     </div>
   );

@@ -46,8 +46,6 @@ const DropdownHeader = styled('div')<DropdownHeaderProps>`
 `;
 
 const DropdownMenu = styled('div')<DropdownMenuProps>`
-  ${props => (props.open ? `opacity: 1` : `opacity: 0`)};
-
   margin: 0 -1px;
   width: 100%;
   min-width: 200px;
