@@ -4,7 +4,7 @@ import { faAngleDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import intersection from 'lodash.intersection';
 import unionBy from 'lodash.unionby';
-import React, { FunctionComponent, MouseEvent, useEffect, useRef, useState, SyntheticEvent } from 'react';
+import React, { FunctionComponent, MouseEvent, SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { csx } from '../../utils/styles';
 
 import {
@@ -58,7 +58,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   }, []);
 
   useEffect(() => {
-    if(open) inputRef.current && inputRef.current.select();
+    if(open) { inputRef.current && inputRef.current.select(); } // tslint:disable-line
   }, [open])
 
   /**
