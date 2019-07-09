@@ -33,7 +33,8 @@ const DropdownWrapper = styled('div')<DropdownWrapperProps>`
 `;
 
 const DropdownHeader = styled('div')<DropdownHeaderProps>`
-  padding: ${props => (props.multiple && props.optionSelected ? `.5rem 1.5rem .5rem .5rem` : `0 .5rem`)};
+  padding: ${props =>
+    props.multiple && props.optionSelected ? `.5rem 1.5rem .5rem .5rem` : `0 .5rem`};
   line-height: 1em;
   border: 1px solid rgba(34, 36, 38, 0.15);
   white-space: normal;
