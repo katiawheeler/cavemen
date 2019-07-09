@@ -22,6 +22,7 @@ export interface DropdownProps {
   multiple?: boolean;
   open?: boolean;
   placeholder?: string;
+  searchable?: boolean;
   trigger?: ReactNode;
   css?: any;
 }

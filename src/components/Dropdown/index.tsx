@@ -4,19 +4,21 @@ import { faAngleDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import intersection from 'lodash.intersection';
 import unionBy from 'lodash.unionby';
-import React, { FunctionComponent, MouseEvent, useEffect, useRef, useState } from 'react';
+import React, { FunctionComponent, MouseEvent, useEffect, useRef, useState, SyntheticEvent } from 'react';
 import { csx } from '../../utils/styles';
 
 import {
   ClearIcon,
   DeleteIcon,
   DropdownHeader,
+  DropdownIcon,
   DropdownLabel,
   DropdownMenu,
   DropdownMultiOption,
   DropdownOption,
   DropdownText,
-  DropdownWrapper
+  DropdownWrapper,
+  FilterTextInput
 } from './Dropdown.styles';
 import { DropdownProps, Option, StateOption } from './types';
 import { convertOptionsToStateOptions, convertToPropsOption } from './utils';
@@ -25,9 +27,11 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   const [currentlySelected, setCurrentlySelected] = useState<StateOption[] | null>(null);
   const [options, setOptions] = useState<StateOption[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+  const [filterText, setFilterText] = useState<string>('');
   const [clearable, setClearable] = useState<boolean>(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   /**
    * Setup
@@ -52,6 +56,10 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, []);
+
+  useEffect(() => {
+    if(open) inputRef.current && inputRef.current.select();
+  }, [open])
 
   /**
    * Handle Default Options for Multiple Dropdown
@@ -219,6 +227,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   const clearSelected = (event: MouseEvent<HTMLElement>) => { 
     setClearable(false); 
     setCurrentlySelected(null); 
+    setFilterText('');
     props.onChange(null, event);
   }
 
@@ -237,7 +246,49 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     
     return '';
   }
+
+  const filterOptions = (event: SyntheticEvent<HTMLInputElement>) => { 
+    const value = (event.target as HTMLInputElement).value;
+    setFilterText(value);
+    value !== '' ? setOptions(options.filter(opt => opt.name.includes(value))) : setOptions(convertOptionsToStateOptions(props.options));  
+  }
+
+  const renderTrigger = () => <div onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)} ref={headerRef}>{props.trigger}</div>
   
+  const renderStandardDropdownHeader = () => 
+          <DropdownHeader
+            data-testid="dropdown-header"
+            multiple={props.multiple}
+            optionSelected={options.length > 0}
+            onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)}
+            ref={headerRef}
+          >
+            <DropdownText>{determineDropdownHeaderContent()}</DropdownText>
+            {clearable && props.clearable && <ClearIcon icon={faTimes} data-testid="clear-icon" onClick={clearSelected} />}
+            <DropdownIcon
+              icon={faAngleDown}
+              data-testid="dropdown-icon"
+              onClick={() => setOpen(!open)}
+            />
+        </DropdownHeader>
+
+  const renderSearchableDropdownHeader = () => 
+          <DropdownHeader
+            data-testid="dropdown-header"
+            multiple={props.multiple}
+            optionSelected={options.length > 0}
+            onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)}
+            ref={headerRef}
+          >
+            {!open && <DropdownText>{determineDropdownHeaderContent()}</DropdownText>}
+            <FilterTextInput id="dropdown-filter" onChange={filterOptions} value={filterText} ref={inputRef} css={{display: open ? 'block' : 'none' }} />
+            {clearable && props.clearable && <ClearIcon icon={faTimes} data-testid="clear-icon" onClick={clearSelected} />}
+            <DropdownIcon
+              icon={faAngleDown}
+              data-testid="dropdown-icon"
+              onClick={() => setOpen(!open)}
+            />
+        </DropdownHeader>
   
   const renderMultipleOptions = () =>
     currentlySelected!.map((option: StateOption) => (
@@ -260,28 +311,9 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     <div css={csx(props.css, { display: 'inline-block', width: '100%'})}>
       {props.label && <DropdownLabel data-testid="dropdown-label">{props.label}</DropdownLabel>}
       <DropdownWrapper data-testid="dropdown-wrapper" ref={wrapperRef} role="listbox" id={props.id} disabled={props.disabled} trigger={props.trigger}>
-        {props.trigger && 
-          <div onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)} ref={headerRef}>
-            {props.trigger}
-          </div>
-        }
-        {!props.trigger && 
-          <DropdownHeader
-            data-testid="dropdown-header"
-            multiple={props.multiple}
-            optionSelected={options.length > 0}
-            onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)}
-            ref={headerRef}
-          >
-            <DropdownText>{determineDropdownHeaderContent()}</DropdownText>
-            {clearable && props.clearable && <ClearIcon icon={faTimes} data-testid="clear-icon" onClick={clearSelected} />}
-            <FontAwesomeIcon
-              icon={faAngleDown}
-              data-testid="dropdown-icon"
-              onClick={() => setOpen(!open)}
-            />
-        </DropdownHeader>
-        }
+        {props.trigger && renderTrigger()}
+        {!props.trigger && !props.searchable && renderStandardDropdownHeader()}
+        {!props.trigger && props.searchable && renderSearchableDropdownHeader()}
           <DropdownMenu data-testid="dropdown-menu" open={open}>
             {options.map(
               option =>
