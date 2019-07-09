@@ -42,6 +42,9 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
 
     // throw error if multiple and trigger are set
     if(props.trigger && props.multiple) { throw new Error("A trigger cannot be used with a multi-select dropdown")}
+
+    // throw error if multiple and searchable are set
+    if(props.trigger && props.searchable) { throw new Error("A multi-select dropdown is not currently searchable.")}
     
     if (props.open) { setOpen(props.open); }
     
@@ -57,9 +60,15 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     };
   }, []);
 
+  // Focus input when Dropdown is "open"
   useEffect(() => {
     if(open) { inputRef.current && inputRef.current.select(); } // tslint:disable-line
   }, [open])
+
+  // update options if prop options change
+  useEffect(() => {
+    setOptions(convertOptionsToStateOptions(props.options));
+  }, [props.options])
 
   /**
    * Handle Default Options for Multiple Dropdown
@@ -247,10 +256,17 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     return '';
   }
 
+  /**
+   * Filter Options
+   * 
+   * Filters the options based on the users input
+   * @param event: SyntheticEvent<HTMLInputElement> - the keyboard event that triggered the filter
+   */
   const filterOptions = (event: SyntheticEvent<HTMLInputElement>) => { 
     const value = (event.target as HTMLInputElement).value;
     setFilterText(value);
-    value !== '' ? setOptions(options.filter(opt => opt.name.includes(value) || `${opt.value}`.includes(value))) : setOptions(convertOptionsToStateOptions(props.options));  
+    const filteredOptions = value !== '' ? props.options.filter(opt => opt.name.includes(value) || `${opt.value}`.includes(value)) : props.options;
+    setOptions(convertOptionsToStateOptions(filteredOptions));  
   }
 
   const renderTrigger = () => <div onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)} ref={headerRef}>{props.trigger}</div>
