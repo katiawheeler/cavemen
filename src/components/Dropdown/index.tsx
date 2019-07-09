@@ -250,7 +250,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   const filterOptions = (event: SyntheticEvent<HTMLInputElement>) => { 
     const value = (event.target as HTMLInputElement).value;
     setFilterText(value);
-    value !== '' ? setOptions(options.filter(opt => opt.name.includes(value))) : setOptions(convertOptionsToStateOptions(props.options));  
+    value !== '' ? setOptions(options.filter(opt => opt.name.includes(value) || `${opt.value}`.includes(value))) : setOptions(convertOptionsToStateOptions(props.options));  
   }
 
   const renderTrigger = () => <div onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)} ref={headerRef}>{props.trigger}</div>
