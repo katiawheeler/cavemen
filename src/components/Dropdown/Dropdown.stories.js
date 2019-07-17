@@ -29,16 +29,16 @@ const Square = styled('div')`
   width: 350px;
 `;
 
-const HeaderInputStyle = () => ({ 
-  ".dropdown-option": {
-    color: 'green'
+const HeaderInputStyle = () => ({
+  '.dropdown-option': {
+    color: 'green',
   },
-  ".dropdown-header": {
-    fontSize: '22px'
+  '.dropdown-header': {
+    fontSize: '22px',
   },
   width: '8em',
   height: '7em',
-})
+});
 
 storiesOf('Components|Dropdown', module)
   .add(
