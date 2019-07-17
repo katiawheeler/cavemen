@@ -269,11 +269,12 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
     setOptions(convertOptionsToStateOptions(filteredOptions));  
   }
 
-  const renderTrigger = () => <div onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)} ref={headerRef}>{props.trigger}</div>
+  const renderTrigger = () => <div onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)} ref={headerRef} data-testid="dropdown-trigger" className="dropdown-trigger">{props.trigger}</div>
   
   const renderStandardDropdownHeader = () => 
           <DropdownHeader
             data-testid="dropdown-header"
+            className="dropdown-header"
             multiple={props.multiple}
             optionSelected={options.length > 0}
             onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)}
@@ -291,13 +292,14 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
   const renderSearchableDropdownHeader = () => 
           <DropdownHeader
             data-testid="dropdown-header"
+            className="dropdown-header"
             multiple={props.multiple}
             optionSelected={options.length > 0}
             onClick={(e: MouseEvent<HTMLElement>) => handleHeaderClick(e)}
             ref={headerRef}
           >
             {!open && <DropdownText>{determineDropdownHeaderContent()}</DropdownText>}
-            <FilterTextInput id="dropdown-filter" onChange={filterOptions} value={filterText} ref={inputRef} css={{display: open ? 'block' : 'none' }} />
+            <FilterTextInput data-testid="dropdown-filter" onChange={filterOptions} value={filterText} ref={inputRef} css={{display: open ? 'block' : 'none' }} />
             {clearable && props.clearable && <ClearIcon icon={faTimes} data-testid="clear-icon" onClick={clearSelected} />}
             <DropdownIcon
               icon={faAngleDown}
@@ -312,6 +314,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
         value={option.value}
         key={`selected-${option.value}`}
         data-testid={`dropdown-selected-multi-${option.value}`}
+        className="dropdown-multi-option"
       >
         {option.name}
         <DeleteIcon
@@ -324,9 +327,9 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
       </DropdownMultiOption>
     ));
   return (
-    <div css={csx(props.css, { display: 'inline-block', width: '100%'})}>
+    <div css={csx({ display: 'inline-block', width: '100%'}, props.css)}>
       {props.label && <DropdownLabel data-testid="dropdown-label">{props.label}</DropdownLabel>}
-      <DropdownWrapper data-testid="dropdown-wrapper" ref={wrapperRef} role="listbox" id={props.id} disabled={props.disabled} trigger={props.trigger}>
+      <DropdownWrapper data-testid="dropdown-wrapper" className="dropdown-wrapper" ref={wrapperRef} role="listbox" id={props.id} disabled={props.disabled} trigger={props.trigger}>
         {props.trigger && renderTrigger()}
         {!props.trigger && !props.searchable && renderStandardDropdownHeader()}
         {!props.trigger && props.searchable && renderSearchableDropdownHeader()}
@@ -339,7 +342,7 @@ const Dropdown: FunctionComponent<DropdownProps> = (props: DropdownProps) => {
                     key={option.value}
                     data-testid={`dropdown-option-${option.value}`}
                     onClick={(event: MouseEvent<HTMLElement>) => handleOptionClick(option, event)}
-                    className={currentlySelected && currentlySelected.includes(option) ? 'selected' : ''}
+                    className={currentlySelected && currentlySelected.includes(option) ? 'dropdown-option selected' : 'dropdown-option'}
                   >
                     {option.name}
                   </DropdownOption>

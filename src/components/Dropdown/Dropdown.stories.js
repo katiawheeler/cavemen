@@ -29,6 +29,17 @@ const Square = styled('div')`
   width: 350px;
 `;
 
+const HeaderInputStyle = () => ({ 
+  ".dropdown-option": {
+    color: 'green'
+  },
+  ".dropdown-header": {
+    fontSize: '22px'
+  },
+  width: '8em',
+  height: '7em',
+})
+
 storiesOf('Components|Dropdown', module)
   .add(
     'default',
@@ -168,7 +179,7 @@ storiesOf('Components|Dropdown', module)
         <Dropdown
           options={dropdownOptions}
           onChange={option => console.log(option)}
-          css={{ color: 'green' }}
+          css={HeaderInputStyle}
         />
       </Square>
     ),

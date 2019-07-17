@@ -20,6 +20,7 @@
     "primitives"
   ],
   "dependencies": {
+    "@emotion/babel-preset-css-prop": "^10.0.14",
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
     "@fortawesome/fontawesome-svg-core": "^1.2.17",

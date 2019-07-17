@@ -27,6 +27,7 @@ const DropdownWrapper = styled('div')<DropdownWrapperProps>`
   cursor: pointer;
   background: #fff;
   width: auto;
+  height: auto;
   position: relative;
   min-width: ${props => (props.trigger ? 'auto' : '100%')};
   display: inline-block;
@@ -39,6 +40,7 @@ const DropdownHeader = styled('div')<DropdownHeaderProps>`
   border: 1px solid rgba(34, 36, 38, 0.15);
   white-space: normal;
   min-height: 40px;
+  height: 100%;
   cursor: pointer;
   display: flex;
   align-items: center;

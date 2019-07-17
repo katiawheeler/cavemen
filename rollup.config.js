@@ -38,7 +38,7 @@ export default {
     commonjs(),
 
     // Compile TypeScript/JavaScript files
-    babel({ extensions, include: ['src/**/*'], plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-class-properties', '@babel/plugin-transform-typescript'], presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript', 'minify'] }),
+    babel({ extensions, include: ['src/**/*'], plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/plugin-proposal-class-properties', '@babel/plugin-transform-typescript', "@emotion/babel-preset-css-prop"], presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript', 'minify'] }),
 
   ],
 };
